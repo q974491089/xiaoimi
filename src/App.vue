@@ -2,21 +2,24 @@
   <div id="app">
     <!-- <Header></Header> -->
     <!-- enter-active-class="animated bounceInRight"
-      leave-active-class="animated bounceOutLeft" -->
+    leave-active-class="animated bounceOutLeft"-->
     <!--   <router-link
       :to="{ name: 'login' }"
       v-if="!$route.meta.isShow"
       @click.native="removeuser"
       >退出登录</router-link
-    > -->
+    >-->
     <!-- 在 link中 添加点击事件的时候 需要加.native -->
-    <bottomNav v-if="!$route.meta.isShow"></bottomNav>
+    <transition>
+      <bottomNav v-if="!$route.meta.isShow"></bottomNav>
+    </transition>
+
     <!--  <transition
       mode="out-in"
       name="custom-classes-transition"
       enter-active-class="animated bounceInRight"
       leave-active-class="animated bounceOutLeft"
-    > -->
+    >-->
     <router-view></router-view>
     <!-- </transition> -->
   </div>
@@ -37,14 +40,14 @@ export default {
     };
   }, */
   methods: {
-    removeuser() {
+    removeuser () {
       localStorage.removeItem("username");
       this.$router.push("/login");
     },
   },
   watch: {
-    $route() {
-      console.log(this.$route);
+    $route () {
+      // console.log(this.$route);
       this.isShow = this.$route.meta.isShow;
     },
   },
@@ -86,16 +89,15 @@ user agent stylesheet div {
 body,
 html {
   font-size: 52.1111px;
+  overflow-y: hidden;
 }
 * {
   margin: 0;
   padding: 0;
 }
-.v-enter,
-.v-leave {
-  transform: translateX(100%);
+.v-leave-to {
+  transform: translateY(10vh);
 }
-.v-enter-active,
 .v-leave-active {
   transition: all 0.8s;
 }
@@ -111,5 +113,9 @@ html {
 }
 body {
   height: 100%;
+}
+.bottomNav{
+  z-index: 100;
+  overflow: hidden;
 }
 </style>
